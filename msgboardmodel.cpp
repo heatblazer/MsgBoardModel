@@ -1,4 +1,7 @@
 #include "msgboardmodel.h"
+#include <QFont>
+#include <QBrush>
+
 
 
 
@@ -36,10 +39,39 @@ int MsgBoardModelView::columnCount(const QModelIndex &parent) const
 
 QVariant MsgBoardModelView::data(const QModelIndex &index, int role) const
 {
-    if ( role == Qt::DisplayRole ) {
-        return QString("Row%1, Column%2")
-                .arg(index.row()+1)
-                .arg(index.column()+1);
+
+    int row = index.row();
+    int col = index.column();
+
+    switch ( role ) {
+    case Qt::DisplayRole:
+        if ( row == 0 && col == 1 ) return QString("<--left");
+        if ( row == 1 && col == 1 ) return QString("right-->");
+
+        return QString("Row%1, Col%2").arg(row+1).arg(col+1);
+
+    case Qt::FontRole:
+        if ( row == 0 && col == 0 ) {
+            QFont bold;
+            bold.setBold(true);
+            return bold;
+        }
+
+    case Qt::BackgroundRole:
+        if ( row == 4 && col == 1 ) {
+            QBrush redBck(Qt::red);
+            return redBck;
+        }
+
+    case Qt::TextAlignmentRole:
+        if ( row == 1 && col == 1 ) {
+            return Qt::AlignRight + Qt::AlignVCenter;
+        }
+
+    case Qt::CheckStateRole:
+        if ( row == 1 && col == 0 ) {
+            return Qt::Checked;
+        }
     }
 
     return QVariant();
