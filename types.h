@@ -1,5 +1,6 @@
 #pragma once
 
+///this is probably needles due to the interfacing
 enum MsgType
 {
     TIMER_ACTIVITY_MSG = 1,
