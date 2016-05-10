@@ -30,7 +30,6 @@ namespace msgboard {
         static MsgBoardModel& instance(void);
         void setRowAndCol(int row, int col);
 
-
     private:
 
         int m_rows;

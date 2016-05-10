@@ -26,11 +26,10 @@ int main(int argc, char *argv[])
     tapi->addMessage("timer message");
     sapi->addMessage("static message");
 
-    ///remove decoration
-    tableView.setWindowFlags(Qt::CustomizeWindowHint);
+    //tableView.setWindowFlags(Qt::CustomizeWindowHint);
 
 
-    QAbstractItemModel* myModel = (QAbstractListModel*) ModelFactory::getMsgBoardModel(10, 2);
+    QAbstractItemModel* myModel = (QAbstractListModel*) ModelFactory::getMsgBoardModel(1, 1);
 
     tableView.setModel(myModel);
 
