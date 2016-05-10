@@ -1,11 +1,15 @@
 #include "userapi.h"
 
-UserApiInterface::UserApiInterface()
-{
+namespace msgboard {
 
-}
+    UserApiInterface::UserApiInterface()
+    {
 
-UserApiInterface::~UserApiInterface()
-{
+    }
 
-}
+    UserApiInterface::~UserApiInterface()
+    {
+
+    }
+
+}//!msgboard

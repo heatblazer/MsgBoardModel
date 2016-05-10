@@ -5,6 +5,7 @@
 #include "usrapiimpl.h"
 
 
+using namespace  msgboard;
 
 /* View the crash course here:
  http://doc.qt.io/qt-4.8/modelview.html
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
     tableView.setWindowFlags(Qt::CustomizeWindowHint);
 
 
-    QAbstractItemModel* myModel = (QAbstractListModel*) ModelFactory::getMsgBoardModelView(10, 2);
+    QAbstractItemModel* myModel = (QAbstractListModel*) ModelFactory::getMsgBoardModel(10, 2);
 
     tableView.setModel(myModel);
 

@@ -2,17 +2,18 @@
 #ifndef USERAPI_H
 #define USERAPI_H
 
-class UserApiInterface
-{
-    //interface class
-public:
-    UserApiInterface();
-    virtual ~UserApiInterface() = 0;
-    virtual void addMessage(const char* msg) = 0;
+namespace msgboard {
+    class UserApiInterface
+    {
+        //interface class
+    public:
+        UserApiInterface();
+        virtual ~UserApiInterface() = 0;
+        virtual void addMessage(const char* msg) = 0;
 
-};
+    };
 
-
+}//!msgboard
 
 
 

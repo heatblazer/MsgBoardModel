@@ -2,18 +2,20 @@
 #ifndef MODELFACTORY_H
 #define MODELFACTORY_H
 
-class MsgBoardModelView;
-class MsgBoardModelLog;
+namespace msgboard {
+    class MsgBoardModel;
+    class MsgBoardModelLog;
 
+    //конкретна фабрика за продуциране на модели
+    class ModelFactory
+    {
 
-//конкретна фабрика за продуциране на модели
-class ModelFactory
-{
+    public:
+        static MsgBoardModel*       getMsgBoardModel(int rows, int cols) ;
+        static MsgBoardModelLog*    getMsgBoardModelLog(void);
 
-public:
-    static MsgBoardModelView*   getMsgBoardModelView(int rows, int cols) ;
-    static MsgBoardModelLog*    getMsgBoardModelLog(void);
+    };
 
-};
-
+}//!msgboard
 #endif // MODELFACTORY_H
+

@@ -1,19 +1,23 @@
 #include "modelfactory.h"
 #include "msgboardmodel.h"
 
-//Nothing just compile the factory
-struct MsgBoardModelLog
-{
+namespace msgboard {
 
-};
+    //Nothing just compile the factory
+    struct MsgBoardModelLog
+    {
 
-MsgBoardModelView* ModelFactory::getMsgBoardModelView(int rows, int cols)
-{
-    return new MsgBoardModelView(rows, cols);
-}
+    };
+
+    MsgBoardModel* ModelFactory::getMsgBoardModel(int rows, int cols)
+    {
+        return new MsgBoardModel(rows, cols);
+    }
 
 
-MsgBoardModelLog*   ModelFactory::getMsgBoardModelLog(void)
-{
-    return NULL;
-}
+    MsgBoardModelLog*   ModelFactory::getMsgBoardModelLog(void)
+    {
+        return NULL;
+    }
+
+}//!msgboard
