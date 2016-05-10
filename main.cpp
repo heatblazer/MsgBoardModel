@@ -8,10 +8,13 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QTableView tableView;
-    MsgBoardModelView* myModel = ModelFactory::getMsgBoardModelView(10, 2);
 
+    ///remove decoration
+    //tableView.setWindowFlags(Qt::CustomizeWindowHint);
 
-    tableView.setModel((QAbstractListModel*)myModel);
+    QAbstractItemModel* myModel = (QAbstractListModel*) ModelFactory::getMsgBoardModelView(10, 2);
+
+    tableView.setModel(myModel);
 
     tableView.show();
 

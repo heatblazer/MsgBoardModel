@@ -18,6 +18,9 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     msgboardmodel.h \
-    modelfactory.h
+    modelfactory.h \
+    types.h \
+    userapi.h \
+    usrapiimpl.h
 
 FORMS    +=
