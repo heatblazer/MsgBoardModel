@@ -14,7 +14,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     msgboardmodel.cpp \
-    modelfactory.cpp
+    modelfactory.cpp \
+    userapi.cpp \
+    userapiimpl.cpp
+
 
 HEADERS  += \
     msgboardmodel.h \

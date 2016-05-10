@@ -17,9 +17,12 @@ int main(int argc, char *argv[])
     QTableView tableView;
 
     UserApiInterface* uapi = new UserMessage;
+    UserApiInterface* tapi = new TimerMessage;
+    UserApiInterface* sapi = new StaticMessage;
 
-    uapi->addMessage("alabala");
-
+    uapi->addMessage("user message");
+    tapi->addMessage("timer message");
+    sapi->addMessage("static message");
 
     ///remove decoration
     //tableView.setWindowFlags(Qt::CustomizeWindowHint);
