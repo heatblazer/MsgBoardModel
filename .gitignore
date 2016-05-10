@@ -1,7 +1,5 @@
 *.pro.user
 *.pro.user.*
 *.
-
 !.gitignore
 
-*.txt
