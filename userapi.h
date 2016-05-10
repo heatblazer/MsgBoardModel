@@ -2,9 +2,6 @@
 #ifndef USERAPI_H
 #define USERAPI_H
 
-class UserApi;
-
-
 class UserApiInterface
 {
     //interface class
