@@ -6,6 +6,7 @@ TimerMessage::TimerMessage()
     : m_msg(nullptr), m_type(TIMER_ACTIVITY_MSG)
 {
     //start timer !!!
+    m_timer.start(1500);
 }
 
 TimerMessage::~TimerMessage()

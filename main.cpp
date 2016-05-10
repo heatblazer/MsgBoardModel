@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 
     QTableView tableView;
 
+
     UserApiInterface* uapi = new UserMessage;
     UserApiInterface* tapi = new TimerMessage;
     UserApiInterface* sapi = new StaticMessage;
@@ -25,7 +26,8 @@ int main(int argc, char *argv[])
     sapi->addMessage("static message");
 
     ///remove decoration
-    //tableView.setWindowFlags(Qt::CustomizeWindowHint);
+    tableView.setWindowFlags(Qt::CustomizeWindowHint);
+
 
     QAbstractItemModel* myModel = (QAbstractListModel*) ModelFactory::getMsgBoardModelView(10, 2);
 

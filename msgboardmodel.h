@@ -20,18 +20,17 @@ public:
     int columnCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
-//TODO:    bool setData(const QModelIndex &index, const QVariant &value, int role) const Q_DECL_OVERRIDE;
-
+    bool setData(const QModelIndex &index, const QVariant &value, int role) const;
 //    QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
 
 //    bool hasChildren(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 //    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    static MsgBoardModelView* getInsance(void);
-
+    static MsgBoardModelView& instance(void);
     void setRowAndCol(int row, int col);
-private:
 
+
+private:
 
     int m_rows;
     int m_cols;

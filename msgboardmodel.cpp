@@ -6,9 +6,9 @@
 
 
 MsgBoardModelView::MsgBoardModelView(int rows, int columns, QObject *parent)
-    :m_rows(rows), m_cols(columns), QAbstractListModel(parent)
+    : m_rows(rows), m_cols(columns), QAbstractListModel(parent)
 {
-
+    //todo:
 }
 
 
@@ -18,21 +18,26 @@ MsgBoardModelView::~MsgBoardModelView()
 }
 
 
-//singleton
-MsgBoardModelView*  MsgBoardModelView::getInsance(void)
+/**
+ * @brief singleton
+ * @return static instance
+ */
+MsgBoardModelView&  MsgBoardModelView::instance(void)
 {
     static MsgBoardModelView pInstance;
-    return &pInstance;
+    return pInstance;
 }
 
 
 int MsgBoardModelView::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return m_rows;
 }
 
 int MsgBoardModelView::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return m_cols;
 }
 
@@ -77,4 +82,12 @@ QVariant MsgBoardModelView::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+/*TODO*/
+bool MsgBoardModelView::setData(const QModelIndex &index, const QVariant &value, int role) const
+{
+    Q_UNUSED(index);
+    Q_UNUSED(value);
+    Q_UNUSED(role);
 
+    return false;
+}
