@@ -4,6 +4,12 @@
 #include "modelfactory.h"
 #include "usrapiimpl.h"
 
+
+
+/* View the crash course here:
+ http://doc.qt.io/qt-4.8/modelview.html
+*/
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
