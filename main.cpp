@@ -18,24 +18,24 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-//the messages to display
-    Msg m1("some msg", TIMER_ACTIVITY_MSG, 10);
-    Msg m2("some msg", USER_ACTIVITY_MSG, -1);
-    Msg m3("some msg", STATIC_MSG, -1);
-
-// deprecated
-    UserApiInterface* uapi = new UserMessage;
-    UserApiInterface* tapi = new TimerMessage;
-    UserApiInterface* sapi = new StaticMessage;
-
-    uapi->addMessage("user message");
-    tapi->addMessage("timer message");
-    sapi->addMessage("static message");
-
-
     //tableView.setWindowFlags(Qt::CustomizeWindowHint);
 
     MsgBoardModel* myModel = ModelFactory::getMsgBoardModel();
+
+    Msg m0("sdasdasdas", STATIC_MSG, -1);
+    Msg m1("sdasdasdas", STATIC_MSG, -1);
+    Msg m2("sdasdasdas", STATIC_MSG, -1);
+    Msg m3("sdasdasdas", STATIC_MSG, -1);
+    Msg m4("last message", STATIC_MSG, -1);
+
+    myModel->setMyMsg(m0);
+    myModel->setMyMsg(m1);
+    myModel->setMyMsg(m2);
+    myModel->setMyMsg(m3);
+    myModel->setMyMsg(m4);
+
+
+
     MsgBoardView* myView = new MsgBoardView();
 
 
