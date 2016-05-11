@@ -69,3 +69,27 @@
 
 
 
+
+
+
+bool NamesModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    int existing_count = this->namesList.count();
+    beginInsertRows(parent, row, row + count - 1);
+    for ( int i = row; i < (row + count - 1); i++ )
+        this->namesList.insert(i, QString("Multi Hello World = %1").arg(i));
+    endInsertRows();
+    return true;
+}
+
+The same goes for beginRemoveRows.
+
+bool NamesModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    int existing_count = this->namesList.count();
+    beginRemoveRows(parent, row, row + count - 1);
+    for ( int i = (row + count - 1); i <= row; i-- )
+        this->namesList.removeAt(i);
+    endRemoveRows();
+    return true;
+}

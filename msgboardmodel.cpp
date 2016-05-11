@@ -37,6 +37,45 @@ namespace msgboard {
         return pInstance;
     }
 
+/***********************************************************************************/
+
+
+    bool MsgBoardModel::insertRows(int row, const QModelIndex &parent)
+    {
+
+        int msgSize = m_messages.count();
+
+        beginInsertRows(parent, row, msgSize+row-1);
+        insertRow(row, parent);
+        endInsertRows();
+
+        return true;
+    }
+
+
+    bool MsgBoardModel::removeRows(int row, int count, const QModelIndex &parent)
+    {
+
+
+
+        return false;
+    }
+
+    bool MsgBoardModel::insertColumns(int column, int count, const QModelIndex &parent)
+    {
+        int msgSize = m_messages.count();
+
+        beginInsertColumns(parent, column, msgSize);
+        insertColumn(2, parent);
+        endInsertColumns();
+
+        return true;
+    }
+
+    bool MsgBoardModel::removeColumns(int column, int count, const QModelIndex &parent)
+    {
+        return true;
+    }
 
     /**
      * @brief UNUSED (do not delete for now )
@@ -77,37 +116,43 @@ namespace msgboard {
         switch ( role ) {
         case Qt::DisplayRole:
 
-            if ( !m_messages.empty() ) {
-                return m_messages.at(this->index(row, col).column())->m_msg;
-            }
-
-            break;
+             return m_messages.at(row)->m_msg;
 
         case Qt::FontRole:
             if ( m_messages.at(row)->m_type == USER_ACTIVITY_MSG){
                 QFont bold;
                 bold.setBold(true);
                 return bold;
-            }
-            break;
 
-        case Qt::BackgroundRole:
-            if ( m_messages.at(row)->m_type == USER_ACTIVITY_MSG ) {
-                QBrush redBck(Qt::red);
-                return redBck;
             } else if ( m_messages.at(row)->m_type == TIMER_ACTIVITY_MSG ) {
-                QBrush grnBck(Qt::green);
-                return grnBck;
+                QFont bold;
+                bold.setItalic(true);
+                return bold;
+
             } else {
 
             }
             break;
 
-        case Qt::TextAlignmentRole:
-            if ( row == 0 && col == 0 ) {
-                return Qt::AlignAbsolute;
+        case Qt::BackgroundRole:
+            if ( m_messages.at(row)->m_type == STATIC_ACTIVITY_MSG ) {
+                QBrush redBck(Qt::yellow);
+                return redBck;
+
+            } else if ( m_messages.at(row)->m_type == TIMER_ACTIVITY_MSG ) {
+                QBrush grnBck(Qt::green);
+                return grnBck;
+
+            } else {
+                QBrush bluBck(Qt::red);
+                return bluBck;
+
             }
             break;
+
+        case Qt::TextAlignmentRole:
+
+            return Qt::AlignAbsolute;
 
         }
 
@@ -127,6 +172,7 @@ namespace msgboard {
         return false;
     }
 
+/***********************************************************************************/
 
     void MsgBoardModel::setUserMsg(const QString &msg)
     {
@@ -134,6 +180,7 @@ namespace msgboard {
 
         Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1);
         m_messages.append(m);
+        insertRows(m->m_type, QModelIndex());
 
     }
 
@@ -141,12 +188,17 @@ namespace msgboard {
     {
         Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout);
         m_messages.append(m);
+        insertRows(m->m_type, QModelIndex());
+
     }
 
     void MsgBoardModel::setStaticMsg(const QString &msg)
     {
         Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1);
         m_messages.append(m);
+        insertRows(m->m_type, QModelIndex());
+
+
     }
 
 
@@ -155,5 +207,12 @@ namespace msgboard {
         // TODO
     }
 
+
+
+/************************************************************************/
+    void MsgBoardModel::doWork()
+    {
+        // do some task here if needed
+    }
 
 }

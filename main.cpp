@@ -21,6 +21,10 @@ int main(int argc, char *argv[])
 
 
     myModel->setTimerMsg("128381231283123", 2000);
+    myModel->setUserMsg("dfsdfgfgfggghgh");
+    myModel->setStaticMsg("------2-2--2-2-2-");
+
+
 
     MsgBoardView* myView = new MsgBoardView();
 
@@ -28,7 +32,8 @@ int main(int argc, char *argv[])
     myView->setMsgModel((QAbstractItemModel*)myModel);
     myView->showMsgModel();
 
-   // delete myView;
+   // test destruction
+   //delete myView;
 
     // qtcreator to step with the debuger . . .  nothing
     int asasa = 100000;

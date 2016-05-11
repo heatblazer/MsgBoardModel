@@ -10,6 +10,15 @@ namespace msgboard {
         STATIC_ACTIVITY_MSG = 3
     };
 
+    enum LogType
+    {
+        INFO_LOG = 1,
+        WARN_LOG = 2,
+        ERROR_LOG = 3,
+        UNKNOWN_LOG = 4
+    };
+
+
     // info class
     class Msg
     {

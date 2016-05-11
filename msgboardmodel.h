@@ -26,13 +26,18 @@ namespace msgboard {
     //    QModelIndex index(int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
     //    QModelIndex parent(const QModelIndex &child) const Q_DECL_OVERRIDE;
 
-
         int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
         int columnCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
+        bool insertRows(int row, const QModelIndex &parent) ;
+        bool removeRows(int row, int count, const QModelIndex &parent)  ;
+
+        bool insertColumns(int column, int count, const QModelIndex &parent);
+        bool removeColumns(int column, int count, const QModelIndex &parent);
+
+
         QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
         bool setData(const QModelIndex &index, const QVariant &value, int role) const;
-    //    QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
 
     //    bool hasChildren(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     //    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -42,10 +47,13 @@ namespace msgboard {
 
     signals:
     public slots:
-
+        /**
+         * @brief doWork - UNUSED
+         */
+        virtual void doWork(void); // in case we need to attach a custom task to the object
 
     private:
-        MsgBoardModel(int rows = 1, int columns = 1, QObject *parent = 0);
+        MsgBoardModel(int rows = 3, int columns = 3, QObject *parent = 0);
         ~MsgBoardModel();
         static MsgBoardModel* pInstance;
 // probably unused later
