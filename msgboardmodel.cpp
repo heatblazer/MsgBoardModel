@@ -62,16 +62,24 @@ namespace msgboard {
 
 
 
+    /**
+     * @brief overriden function, set the data and display by role
+     * @param the index
+     * @param the role
+     * @return QVariant
+     */
     QVariant MsgBoardModel::data(const QModelIndex &index, int role) const
     {
 
         int row = index.row();
         int col = index.column();
 
+
+
         switch ( role ) {
         case Qt::DisplayRole:
-            if ( row == 0 && col == 0 ) {
-                return QString("TEST MESSAGE");
+            if ( row == 0  && col == 0 ) {
+                return m_messages.back()->m_msg;
             }
             break;
 
@@ -112,4 +120,13 @@ namespace msgboard {
         return false;
     }
 
+
+
+    void MsgBoardModel::setMyMsg(const Msg &msg)
+    {
+
+        // append a message to the lsit, also emit a change and update the board!!!
+        m_messages.append(&msg);
+
+    }
 }

@@ -45,7 +45,7 @@ namespace msgboard {
         int m_cols;
 
         // list of custom messages added
-        QList<Msg*> m_messages;
+        QList<const Msg*> m_messages;
 
         friend class MsgBoardView;
     };
