@@ -37,7 +37,7 @@ namespace msgboard {
     }
 
     StaticMessage::StaticMessage()
-        : m_msg(nullptr), m_type(STATIC_MSG)
+        : m_msg(nullptr), m_type(STATIC_ACTIVITY_MSG)
     {
         //implement custom init for static messsages
     }

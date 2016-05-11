@@ -16,7 +16,11 @@ namespace msgboard {
         //when tested factory I`ll protect the construction of the classes
     public:
 
-        virtual void setMyMsg(const Msg& msg);
+        virtual void setUserMsg(const QString& msg);
+        virtual void setTimerMsg(const QString& msg, int timeout);
+        virtual void setStaticMsg(const QString& msg);
+
+        virtual void removeMyMsg(const QString& msg);
 
 
     //    QModelIndex index(int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
@@ -36,8 +40,12 @@ namespace msgboard {
         static MsgBoardModel* instance(void);
         void setRowAndCol(int row, int col);
 
+    signals:
+    public slots:
+
+
     private:
-        MsgBoardModel(int rows = 10, int columns = 1, QObject *parent = 0);
+        MsgBoardModel(int rows = 1, int columns = 1, QObject *parent = 0);
         ~MsgBoardModel();
         static MsgBoardModel* pInstance;
 // probably unused later
@@ -45,8 +53,7 @@ namespace msgboard {
         int m_cols;
 
         // list of custom messages added
-        QList<const Msg*> m_messages;
-
+        QList<Msg*> m_messages;
         friend class MsgBoardView;
     };
 

@@ -74,17 +74,17 @@ namespace msgboard {
         int row = index.row();
         int col = index.column();
 
-
-
         switch ( role ) {
         case Qt::DisplayRole:
-            if ( row == 0  && col == 0 ) {
-                return m_messages.back()->m_msg;
+
+            if ( !m_messages.empty() ) {
+                return m_messages.at(this->index(row, col).column())->m_msg;
             }
+
             break;
 
         case Qt::FontRole:
-            if ( row == 0 && col == 0 ) {
+            if ( m_messages.at(row)->m_type == USER_ACTIVITY_MSG){
                 QFont bold;
                 bold.setBold(true);
                 return bold;
@@ -92,9 +92,14 @@ namespace msgboard {
             break;
 
         case Qt::BackgroundRole:
-            if ( row == 0 && col == 0 ) {
+            if ( m_messages.at(row)->m_type == USER_ACTIVITY_MSG ) {
                 QBrush redBck(Qt::red);
                 return redBck;
+            } else if ( m_messages.at(row)->m_type == TIMER_ACTIVITY_MSG ) {
+                QBrush grnBck(Qt::green);
+                return grnBck;
+            } else {
+
             }
             break;
 
@@ -117,16 +122,38 @@ namespace msgboard {
         Q_UNUSED(value);
         Q_UNUSED(role);
 
+
+
         return false;
     }
 
 
-
-    void MsgBoardModel::setMyMsg(const Msg &msg)
+    void MsgBoardModel::setUserMsg(const QString &msg)
     {
+        static int i = 0;
 
-        // append a message to the lsit, also emit a change and update the board!!!
-        m_messages.append(&msg);
+        Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1);
+        m_messages.append(m);
 
     }
+
+    void MsgBoardModel::setTimerMsg(const QString &msg, int timeout)
+    {
+        Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout);
+        m_messages.append(m);
+    }
+
+    void MsgBoardModel::setStaticMsg(const QString &msg)
+    {
+        Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1);
+        m_messages.append(m);
+    }
+
+
+    void MsgBoardModel::removeMyMsg(const QString &msg)
+    {
+        // TODO
+    }
+
+
 }
