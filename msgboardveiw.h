@@ -14,9 +14,12 @@ namespace msgboard {
     class MsgBoardView : QListView
     {
 
-
     public:
+        MsgBoardView(QWidget *parent = 0);
+        virtual ~MsgBoardView();
 
+        virtual void setMsgModel(QAbstractItemModel* model);
+        virtual void showModel(void);
 
     protected:
 

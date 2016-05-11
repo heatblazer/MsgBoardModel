@@ -5,7 +5,7 @@
 #include "modelfactory.h"
 #include "usrapiimpl.h"
 #include "types.h"
-
+#include "msgboardveiw.h"
 
 using namespace  msgboard;
 
@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 
     MsgBoardModel* myModel = ModelFactory::getMsgBoardModel();
 
+    MsgBoardView* myView = new MsgBoardView();
 
-    tableView.setModel((QAbstractItemModel*)myModel);
-
-    tableView.show();
+    myView->setMsgModel((QAbstractItemModel*)myModel);
+    myView->showModel();
 
     return a.exec();
 }
