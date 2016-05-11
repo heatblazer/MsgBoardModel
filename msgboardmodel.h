@@ -6,12 +6,18 @@
 
 namespace msgboard {
 
+    class MsgBoardView;
+    class Msg; //! in types.h
+
     class MsgBoardModel : QAbstractListModel
     {
 
         Q_OBJECT
         //when tested factory I`ll protect the construction of the classes
     public:
+
+        virtual void setMyMsg(const Msg& msg);
+
 
     //    QModelIndex index(int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
     //    QModelIndex parent(const QModelIndex &child) const Q_DECL_OVERRIDE;
@@ -38,6 +44,10 @@ namespace msgboard {
         int m_rows;
         int m_cols;
 
+        // list of custom messages added
+        QList<Msg*> m_messages;
+
+        friend class MsgBoardView;
     };
 
 }

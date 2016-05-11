@@ -8,22 +8,26 @@ namespace msgboard
         : QListView(parent)
     {
 
-    }
 
+    }
 
     MsgBoardView::~MsgBoardView()
     {
 
+        delete m_model;
     }
 
-
+    // use the parent`s setModel
     void MsgBoardView::setMsgModel(QAbstractItemModel* model)
     {
-        ((QListView*)this)->setModel(model);
+        //((QListView*)this)->setModel(model);
+        setModel(model);
     }
 
-    void MsgBoardView::showModel()
+    // use the parent`s show
+    void MsgBoardView::showMsgModel()
     {
-        ((QListView*)this)->show();
+        //((QListView*)this)->show();
+        show();
     }
 }

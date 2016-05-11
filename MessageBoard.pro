@@ -30,3 +30,6 @@ HEADERS  += \
     msgboardveiw.h
 
 FORMS    +=
+
+#remove it later it`s for reference card
+RESOURCES += info.txt

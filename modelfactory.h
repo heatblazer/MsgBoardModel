@@ -13,6 +13,10 @@ namespace msgboard {
         static MsgBoardModel*       getMsgBoardModel(void) ;
         static MsgBoardModelLog*    getMsgBoardModelLog(void);
 
+
+        friend class MsgBoardModel;
+        friend class MsgBoardModelLog;
+
     };
 
 }
