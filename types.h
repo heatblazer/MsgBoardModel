@@ -25,7 +25,6 @@ namespace msgboard {
     public:
         Msg(const QString& msg, MsgType type, int timer);
         virtual ~Msg(); // if we need to extend it but we won`t do it
-
         QString m_msg;
         MsgType m_type;
         int m_timer; // -1 for non timer messages

@@ -1,11 +1,14 @@
-#include <QTableView>
-#include <QListView>
+// Qt headers //
 #include <QApplication>
+#include <QListView>
+#include <QTableView>
+
+// Local headers //
 #include "msgboardmodel.h"
-#include "modelfactory.h"
-#include "usrapiimpl.h"
-#include "types.h"
 #include "msgboardveiw.h"
+#include "types.h"
+#include "usrapiimpl.h"
+
 
 using namespace  msgboard;
 
@@ -17,26 +20,17 @@ using namespace  msgboard;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MsgBoardModel* myModel = ModelFactory::getMsgBoardModel();
 
-
-    myModel->setTimerMsg("128381231283123", 2000);
-    myModel->setUserMsg("dfsdfgfgfggghgh");
-    myModel->setStaticMsg("------2-2--2-2-2-");
-
-
-
-    MsgBoardView* myView = new MsgBoardView();
-
+    MsgBoardModel* myModel = MsgBoardModel::instance();
+    MsgBoardView*  myView = new MsgBoardView();
 
     myView->setMsgModel((QAbstractItemModel*)myModel);
+    \
+    myModel->addTimerMsg("128381231283123", 2000);
+    myModel->addUserMsg("dfsdfgfgfggghgh");
+    myModel->addStaticMsg("------2-2--2-2-2-");
+
     myView->showMsgModel();
-
-   // test destruction
-   //delete myView;
-
-    // qtcreator to step with the debuger . . .  nothing
-    int asasa = 100000;
 
     return a.exec();
 }

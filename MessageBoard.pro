@@ -11,10 +11,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MessageBoard
 TEMPLATE = app
 
+QMAKE_CXXFLAGS += -std=c++11 -Wextra -pedantic -Wmissing-braces \
+-Wparentheses -Wsequence-point -Wswitch -Wuninitialized -Wcast-qual \
+-Wlogical-op -Wnormalized=nfkc
+
 
 SOURCES += main.cpp \
     msgboardmodel.cpp \
-    modelfactory.cpp \
     userapi.cpp \
     userapiimpl.cpp \
     msgboardview.cpp \
@@ -23,7 +26,6 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     msgboardmodel.h \
-    modelfactory.h \
     types.h \
     userapi.h \
     usrapiimpl.h \

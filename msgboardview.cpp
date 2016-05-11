@@ -7,14 +7,10 @@ namespace msgboard
     MsgBoardView::MsgBoardView(QWidget *parent)
         : QListView(parent)
     {
-
-
     }
 
     MsgBoardView::~MsgBoardView()
     {
-
-        delete m_model;
     }
 
     // use the parent`s setModel

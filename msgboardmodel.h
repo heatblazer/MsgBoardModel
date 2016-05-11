@@ -2,70 +2,52 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QAbstractListModel>
+#include <QAbstractListModel>   // inherite
+#include <QTimer>               // member
 
 namespace msgboard {
+class Msg;
 
-    class MsgBoardView;
-    class Msg; //! in types.h
-
-    class MsgBoardModel : QAbstractListModel
-    {
-
-        Q_OBJECT
-        //when tested factory I`ll protect the construction of the classes
-    public:
-
-        virtual void setUserMsg(const QString& msg);
-        virtual void setTimerMsg(const QString& msg, int timeout);
-        virtual void setStaticMsg(const QString& msg);
-
-        virtual void removeMyMsg(const QString& msg);
-
-
-    //    QModelIndex index(int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
-    //    QModelIndex parent(const QModelIndex &child) const Q_DECL_OVERRIDE;
-
-        int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
-        int columnCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
-
-        bool insertRows(int row, const QModelIndex &parent) ;
-        bool removeRows(int row, int count, const QModelIndex &parent)  ;
-
-        bool insertColumns(int column, int count, const QModelIndex &parent);
-        bool removeColumns(int column, int count, const QModelIndex &parent);
-
-
-        QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
-        bool setData(const QModelIndex &index, const QVariant &value, int role) const;
-
-    //    bool hasChildren(const QModelIndex &parent) const Q_DECL_OVERRIDE;
-    //    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
-
-        static MsgBoardModel* instance(void);
-        void setRowAndCol(int row, int col);
-
-    signals:
-    public slots:
-        /**
-         * @brief doWork - UNUSED
-         */
-        virtual void doWork(void); // in case we need to attach a custom task to the object
-
-    private:
-        MsgBoardModel(int rows = 3, int columns = 3, QObject *parent = 0);
-        ~MsgBoardModel();
-        static MsgBoardModel* pInstance;
-// probably unused later
-        int m_rows;
-        int m_cols;
-
-        // list of custom messages added
-        QList<Msg*> m_messages;
-        friend class MsgBoardView;
+class MsgBoardModel : public QAbstractListModel
+{
+    Q_OBJECT
+    // when tested factory I`ll protect the construction of the classes
+public:
+    enum MsgBoardRoles {
+        ROLE_USER_ACTIVITY = Qt::UserRole + 1
     };
 
-}
+    // user api
+    void addUserMsg(const QString& msg);
+    void addTimerMsg(const QString& msg, int timeout);
+    void addStaticMsg(const QString& msg);
+    void removeMsg(const QString& msg);
+
+    // view api
+    virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
+    int columnCount(const QModelIndex &parent) const;
+    virtual QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role);
+
+    // singletion
+    static MsgBoardModel* instance(void);
+
+private:
+    explicit MsgBoardModel(QObject* parent = nullptr);
+    virtual ~MsgBoardModel();
+
+private slots:
+    void hMsgHideTick();
+
+private:
+    static MsgBoardModel* sInstance;
+
+    // list of custom messages added
+    QList<Msg*> m_messages;
+    QTimer      m_msgHidingTick;
+};
+
+}   // namespace msgboard
 
 
 #endif // MODEL_H

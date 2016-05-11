@@ -1,218 +1,232 @@
 #include "msgboardmodel.h"
-#include "types.h"
 
-#include <QFont>
+// Qt headers //
 #include <QBrush>
+#include <QFont>
 #include <QLabel>
-#include <QVariant>
+#include <QModelIndex>
+#include <QVariant>\
+
+// Local headers //
+#include "types.h"
 
 namespace msgboard {
 
-    MsgBoardModel*  MsgBoardModel::pInstance = nullptr;
+MsgBoardModel*  MsgBoardModel::sInstance = nullptr;
 
 
-    MsgBoardModel::MsgBoardModel(int rows, int columns, QObject *parent)
-        : m_rows(rows), m_cols(columns), QAbstractListModel(parent)
-    {
-
-    }
-
-
-    MsgBoardModel::~MsgBoardModel()
-    {
-
-    }
+MsgBoardModel::MsgBoardModel(QObject *parent) :
+    QAbstractListModel(parent)
+{
+    connect(&m_msgHidingTick, SIGNAL(timeout()), this, SLOT(hMsgHideTick()));
+    m_msgHidingTick.start(200); // 200ms check
+}
 
 
-    /**
-     * @brief singleton ( NOT  THREAD SAFE!!! )
-     * @return static instance
-     */
-    MsgBoardModel*  MsgBoardModel::instance(void)
-    {
-        if ( pInstance == 0 ) {
-            pInstance = new MsgBoardModel;
+MsgBoardModel::~MsgBoardModel()
+{
+}
+
+
+// deincrement the time of all time-messages
+// remove all timeouted messages
+void MsgBoardModel::hMsgHideTick()
+{
+    for(int i = m_messages.count(); i >= 0; --i) {
+        Msg * m = m_messages.at(i);
+        if ((m->m_type == TIMER_ACTIVITY_MSG) && (m->m_timer > 0)) {
+            m->m_timer -= 200;
+
+            if (m->m_timer <= 0) {
+                beginRemoveRows(QModelIndex(), i, i);
+                m_messages.removeAt(i);
+                endRemoveRows();
+            }
         }
+    }
+}
 
-        return pInstance;
+
+/**
+ * @brief singleton ( NOT  THREAD SAFE!!! )
+ * @return static instance
+ */
+MsgBoardModel*  MsgBoardModel::instance(void)
+{
+    if (sInstance == nullptr) {
+        sInstance = new MsgBoardModel;
     }
 
-/***********************************************************************************/
+    return sInstance;
+}
 
 
-    bool MsgBoardModel::insertRows(int row, const QModelIndex &parent)
-    {
-
-        int msgSize = m_messages.count();
-
-        beginInsertRows(parent, row, msgSize+row-1);
-        insertRow(row, parent);
-        endInsertRows();
-
-        return true;
+/**
+ * @brief UNUSED (do not delete for now )
+ * @param parent
+ * @return
+ */
+int MsgBoardModel::rowCount(const QModelIndex &parent) const
+{
+    if (parent.isValid()) {
+        return 0;
     }
 
-
-    bool MsgBoardModel::removeRows(int row, int count, const QModelIndex &parent)
-    {
-
+    return m_messages.count();
+}
 
 
-        return false;
+/**
+ * @brief UNUSED ( do not delete for now )
+ * @param parent
+ * @return
+ */
+int MsgBoardModel::columnCount(const QModelIndex &parent) const
+{
+    if (parent.isValid()) {
+        return 0;
     }
 
-    bool MsgBoardModel::insertColumns(int column, int count, const QModelIndex &parent)
-    {
-        int msgSize = m_messages.count();
+    // we are list
+    return 1;
+}
 
-        beginInsertColumns(parent, column, msgSize);
-        insertColumn(2, parent);
-        endInsertColumns();
 
-        return true;
+///
+/// @brief overriden function, set the data and display by role
+/// @param the index
+/// @param the role
+/// @return QVariant
+///
+QVariant MsgBoardModel::data(const QModelIndex &index, int role) const
+{
+    QVariant res;
+
+    if (!index.isValid()) {
+        return res; // no data for root
     }
 
-    bool MsgBoardModel::removeColumns(int column, int count, const QModelIndex &parent)
-    {
-        return true;
-    }
+    const int row = index.row();
 
-    /**
-     * @brief UNUSED (do not delete for now )
-     * @param parent
-     * @return
-     */
-    int MsgBoardModel::rowCount(const QModelIndex &parent) const
-    {
-        Q_UNUSED(parent);
-        return m_rows;
-    }
+    switch (role) {
+    case Qt::DisplayRole:
 
-    /**
-     * @brief UNUSED ( do not delete for now )
-     * @param parent
-     * @return
-     */
-    int MsgBoardModel::columnCount(const QModelIndex &parent) const
-    {
-        Q_UNUSED(parent);
-        return m_cols;
-    }
+        res = m_messages.at(row)->m_msg;
+        break;
 
+    case Qt::FontRole:
+        if ( m_messages.at(row)->m_type == USER_ACTIVITY_MSG) {
+            QFont bold;
+            bold.setBold(true);
+            res = bold;
+        } else if ( m_messages.at(row)->m_type == TIMER_ACTIVITY_MSG ) {
+            QFont bold;
+            bold.setItalic(true);
+            res = bold;
 
-
-    /**
-     * @brief overriden function, set the data and display by role
-     * @param the index
-     * @param the role
-     * @return QVariant
-     */
-    QVariant MsgBoardModel::data(const QModelIndex &index, int role) const
-    {
-
-        int row = index.row();
-        int col = index.column();
-
-        switch ( role ) {
-        case Qt::DisplayRole:
-
-             return m_messages.at(row)->m_msg;
-
-        case Qt::FontRole:
-            if ( m_messages.at(row)->m_type == USER_ACTIVITY_MSG){
-                QFont bold;
-                bold.setBold(true);
-                return bold;
-
-            } else if ( m_messages.at(row)->m_type == TIMER_ACTIVITY_MSG ) {
-                QFont bold;
-                bold.setItalic(true);
-                return bold;
-
-            } else {
-
-            }
-            break;
-
-        case Qt::BackgroundRole:
-            if ( m_messages.at(row)->m_type == STATIC_ACTIVITY_MSG ) {
-                QBrush redBck(Qt::yellow);
-                return redBck;
-
-            } else if ( m_messages.at(row)->m_type == TIMER_ACTIVITY_MSG ) {
-                QBrush grnBck(Qt::green);
-                return grnBck;
-
-            } else {
-                QBrush bluBck(Qt::red);
-                return bluBck;
-
-            }
-            break;
-
-        case Qt::TextAlignmentRole:
-
-            return Qt::AlignAbsolute;
+        } else {
 
         }
+        break;
 
-        return QVariant();
+    case Qt::ForegroundRole:
+        if ( m_messages.at(row)->m_type == STATIC_ACTIVITY_MSG ) {
+            QBrush redBck(Qt::yellow);
+            res = redBck;
 
-    }
+        } else if ( m_messages.at(row)->m_type == TIMER_ACTIVITY_MSG ) {
+            QBrush grnBck(Qt::green);
+            res = grnBck;
 
-    /*TODO*/
-    bool MsgBoardModel::setData(const QModelIndex &index, const QVariant &value, int role) const
-    {
-        Q_UNUSED(index);
-        Q_UNUSED(value);
-        Q_UNUSED(role);
+        } else {
+            QBrush bluBck(Qt::red);
+            res = bluBck;
+        }
+        break;
 
-
-
-        return false;
-    }
-
-/***********************************************************************************/
-
-    void MsgBoardModel::setUserMsg(const QString &msg)
-    {
-        static int i = 0;
-
-        Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1);
-        m_messages.append(m);
-        insertRows(m->m_type, QModelIndex());
+    default :
+        break;
 
     }
 
-    void MsgBoardModel::setTimerMsg(const QString &msg, int timeout)
-    {
-        Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout);
-        m_messages.append(m);
-        insertRows(m->m_type, QModelIndex());
+    return res;
+}
 
+
+bool MsgBoardModel::setData(const QModelIndex& index, const QVariant& value,
+                            int role)
+{
+    Q_UNUSED(value);
+
+    if (!index.isValid()) {
+        return false;   // can't set root data
     }
 
-    void MsgBoardModel::setStaticMsg(const QString &msg)
-    {
-        Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1);
-        m_messages.append(m);
-        insertRows(m->m_type, QModelIndex());
-
-
+    if (role == ROLE_USER_ACTIVITY) {
+        // remove the message
+        const int row = index.row();
+        if (m_messages.at(row)->m_type == USER_ACTIVITY_MSG) {
+            beginRemoveRows(QModelIndex(), row, row);
+            m_messages.removeAt(row);
+            endRemoveRows();
+        }
+        return true;
     }
 
+    return false;
+}
 
-    void MsgBoardModel::removeMyMsg(const QString &msg)
-    {
-        // TODO
+
+//
+// user api part
+//
+
+
+void MsgBoardModel::addUserMsg(const QString& msg)
+{
+    const int size = m_messages.count();
+
+    Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1);
+
+    beginInsertRows(QModelIndex(), size, size);
+    m_messages.append(m);
+    endInsertRows();
+}
+
+
+void MsgBoardModel::addTimerMsg(const QString& msg, int timeout)
+{
+    const int size = m_messages.count();
+
+    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout);
+
+    beginInsertRows(QModelIndex(), size, size);
+    m_messages.append(m);
+    endInsertRows();
+}
+
+void MsgBoardModel::addStaticMsg(const QString& msg)
+{
+    const int size = m_messages.count();
+
+    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1);
+
+    beginInsertRows(QModelIndex(), size, size);
+    m_messages.append(m);
+    endInsertRows();
+}
+
+
+void MsgBoardModel::removeMsg(const QString& msg)
+{
+    for (int i = 0; i < m_messages.count(); ++i) {
+        if (m_messages.at(i)->m_msg == msg ) {
+            // remove it
+            beginRemoveRows(QModelIndex(), i, i);
+            m_messages.removeAt(i);
+            endRemoveRows();
+        }
     }
-
-
-
-/************************************************************************/
-    void MsgBoardModel::doWork()
-    {
-        // do some task here if needed
-    }
+}
 
 }
