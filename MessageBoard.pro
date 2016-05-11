@@ -16,7 +16,9 @@ SOURCES += main.cpp \
     msgboardmodel.cpp \
     modelfactory.cpp \
     userapi.cpp \
-    userapiimpl.cpp
+    userapiimpl.cpp \
+    msgboardview.cpp \
+    types.cpp
 
 
 HEADERS  += \
@@ -24,6 +26,7 @@ HEADERS  += \
     modelfactory.h \
     types.h \
     userapi.h \
-    usrapiimpl.h
+    usrapiimpl.h \
+    msgboardveiw.h
 
 FORMS    +=

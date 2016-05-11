@@ -13,7 +13,7 @@ namespace msgboard {
 
     };
 
-}//!msgboard
+}
 
 
 

@@ -5,17 +5,17 @@
 #include <QAbstractListModel>
 
 namespace msgboard {
+
     class MsgBoardModel : QAbstractListModel
     {
 
         Q_OBJECT
         //when tested factory I`ll protect the construction of the classes
     public:
-        MsgBoardModel(int rows = 10, int columns = 1, QObject *parent = 0);
-        ~MsgBoardModel();
 
     //    QModelIndex index(int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
     //    QModelIndex parent(const QModelIndex &child) const Q_DECL_OVERRIDE;
+
 
         int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
         int columnCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
@@ -27,17 +27,20 @@ namespace msgboard {
     //    bool hasChildren(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     //    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-        static MsgBoardModel& instance(void);
+        static MsgBoardModel* instance(void);
         void setRowAndCol(int row, int col);
 
     private:
-
+        MsgBoardModel(int rows = 10, int columns = 1, QObject *parent = 0);
+        ~MsgBoardModel();
+        static MsgBoardModel* pInstance;
+// probably unused later
         int m_rows;
         int m_cols;
 
     };
 
-}//!msgboard
+}
 
 
 #endif // MODEL_H

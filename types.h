@@ -1,6 +1,6 @@
 #pragma once
+#include <QString>
 
-class QString;
 namespace msgboard {
 
     enum MsgType
@@ -14,8 +14,8 @@ namespace msgboard {
     class Msg
     {
     public:
-        Msg(const QString msg, MsgType type, int timer);
-        ~Msg(); //I don`t need to extend it for now!
+        Msg(const QString& msg, MsgType type, int timer);
+        virtual ~Msg(); //if we need to extend it
 
         QString m_msg;
         MsgType m_type;
@@ -23,4 +23,4 @@ namespace msgboard {
 
     };
 
-}//!msgboard
+}

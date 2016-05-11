@@ -9,9 +9,9 @@ namespace msgboard {
 
     };
 
-    MsgBoardModel* ModelFactory::getMsgBoardModel(int rows, int cols)
-    {
-        return new MsgBoardModel(rows, cols);
+    MsgBoardModel* ModelFactory::getMsgBoardModel(void)
+    { 
+        return MsgBoardModel::instance();
     }
 
 
@@ -20,4 +20,4 @@ namespace msgboard {
         return NULL;
     }
 
-}//!msgboard
+}

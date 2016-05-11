@@ -1,8 +1,10 @@
 #include <QTableView>
+#include <QListView>
 #include <QApplication>
 #include "msgboardmodel.h"
 #include "modelfactory.h"
 #include "usrapiimpl.h"
+#include "types.h"
 
 
 using namespace  msgboard;
@@ -11,13 +13,19 @@ using namespace  msgboard;
  http://doc.qt.io/qt-4.8/modelview.html
 */
 
+// test the classes in main
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QTableView tableView;
+    QListView tableView;
 
+//the messages to display
+    Msg m1("some msg", TIMER_ACTIVITY_MSG, 10);
+    Msg m2("some msg", USER_ACTIVITY_MSG, -1);
+    Msg m3("some msg", STATIC_MSG, -1);
 
+// deprecated
     UserApiInterface* uapi = new UserMessage;
     UserApiInterface* tapi = new TimerMessage;
     UserApiInterface* sapi = new StaticMessage;
@@ -29,9 +37,10 @@ int main(int argc, char *argv[])
     //tableView.setWindowFlags(Qt::CustomizeWindowHint);
 
 
-    QAbstractItemModel* myModel = (QAbstractListModel*) ModelFactory::getMsgBoardModel(1, 1);
+    MsgBoardModel* myModel = ModelFactory::getMsgBoardModel();
 
-    tableView.setModel(myModel);
+
+    tableView.setModel((QAbstractItemModel*)myModel);
 
     tableView.show();
 

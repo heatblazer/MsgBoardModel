@@ -56,5 +56,5 @@ namespace msgboard {
 
     };
 
-}//!msgboard
+}
 #endif // USRAPIIMPL_H

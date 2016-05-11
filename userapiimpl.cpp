@@ -52,4 +52,4 @@ namespace msgboard {
         m_msg = new QString(msg);
     }
 
-}//!msgboard
+}
