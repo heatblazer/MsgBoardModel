@@ -3,6 +3,7 @@
 // Qt headers //
 #include <QBrush>
 #include <QFont>
+#include <QItemSelectionModel>
 #include <QLabel>
 #include <QModelIndex>
 #include <QVariant>\
@@ -19,11 +20,10 @@ MsgBoardModel*  MsgBoardModel::sInstance = nullptr;
 
 
 MsgBoardModel::MsgBoardModel(QObject *parent) :
-    QAbstractListModel(parent)
+    QAbstractListModel(parent), m_sel(nullptr)
 {
     connect(&m_msgHidingTick, SIGNAL(timeout()), this, SLOT(hMsgHideTick()));
     m_msgHidingTick.start(200); // 200ms check
-
 }
 
 
@@ -59,28 +59,22 @@ void MsgBoardModel::hMsgHideTick()
 void MsgBoardModel::hMsgHideUserActivity()
 {
 
-
-    std::cout << "User clicked on model "
-              << std::endl;
-
-    for(int i=0; i < m_messages.count(); ++i) {
-        Msg* pMsg = m_messages.at(i);
-
-        if (pMsg->m_type == USER_ACTIVITY_MSG) {
-            std::cout << "USER ACTIVITY TYPE ("
-                      << pMsg->m_index
-                      <<")"
-                      << std::endl;
-            beginRemoveRows(QModelIndex(), i, i);
-            m_messages.removeAt(i);
-            endRemoveRows();
-            break;
-        }
-
-
+    QModelIndex curr = m_sel->currentIndex();
+    if (m_messages.at(curr.row())->m_type == USER_ACTIVITY_MSG) {
+        beginRemoveRows(curr, curr.row(), curr.column());
+        m_messages.removeAt(curr.row());
+        endRemoveRows();
     }
 
+
 }
+
+
+void MsgBoardModel::hChangedMessage()
+{
+    std::cout << "CHANGED REPORT " << std::endl;
+}
+
 
 //!
 //! \brief Singleton ( not thread safe )
@@ -221,11 +215,13 @@ void MsgBoardModel::addUserMsg(const QString& msg)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1, true);
+    Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1, false);
     m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
     endInsertRows();
+
+
 }
 
 
@@ -263,5 +259,12 @@ void MsgBoardModel::removeMsg(const QString& msg)
         }
     }
 }
+
+
+void MsgBoardModel::setSelModel(const QItemSelectionModel *pModel)
+{
+    m_sel = pModel;
+}
+
 
 }

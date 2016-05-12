@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include <QAbstractListModel>   // inherite
+#include <QItemSelectionModel>
 #include <QTimer>               // member
 
 namespace msgboard {
@@ -31,6 +32,9 @@ public:
     // singletion
     static MsgBoardModel* instance(void);
 
+    // communication procedures
+    void setSelModel(const QItemSelectionModel* pModel);
+
 private:
     explicit MsgBoardModel(QObject* parent = nullptr);
     virtual ~MsgBoardModel();
@@ -38,6 +42,8 @@ private:
 private slots:
     void hMsgHideTick();
     void hMsgHideUserActivity();
+    void hChangedMessage();
+
 
 private:
     static MsgBoardModel* sInstance;
@@ -45,6 +51,11 @@ private:
     // list of custom messages added
     QList<Msg*> m_messages;
     QTimer      m_msgHidingTick;
+
+
+private:
+    // communication references
+    const QItemSelectionModel* m_sel;
 };
 
 }   // namespace msgboard

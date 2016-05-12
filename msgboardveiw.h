@@ -22,11 +22,12 @@ public:
     virtual void showMsgModel(void);
 
 
-
 protected:
 
 private:
+
     MsgBoardModel* m_model;
+    QItemSelectionModel* m_selectionModel;
 
 };
 

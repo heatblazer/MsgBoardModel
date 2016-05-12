@@ -26,16 +26,16 @@ int main(int argc, char *argv[])
 
     myView->setMsgModel((QAbstractItemModel*)myModel);
     \
-    myModel->addTimerMsg("128381231283123", 2000);
-    myModel->addTimerMsg("128381231283123", 12000);
-    myModel->addTimerMsg("128381231283123", 1000);
-    myModel->addTimerMsg("128381231283123", 33000);
+    myModel->addTimerMsg("first", 2000);
+    myModel->addTimerMsg("pre last", 12000);
+    myModel->addTimerMsg("before firs", 1000);
+    myModel->addTimerMsg("lastest", 20000);
 
-    myModel->addUserMsg("dfsdfgfgfggghgh");
-    myModel->addUserMsg("dfsdfgfgfggghgh");
-    myModel->addUserMsg("dfsdfgfgfggghgh");
-    myModel->addUserMsg("dfsdfgfgfggghgh");
-    myModel->addUserMsg("dfsdfgfgfggghgh");
+    myModel->addUserMsg("message 1");
+    myModel->addUserMsg("message 2");
+    myModel->addUserMsg("message 3");
+    myModel->addUserMsg("message 4");
+    myModel->addUserMsg("message 5");
 
     myModel->addStaticMsg("------2-2--2-2-2-");
 

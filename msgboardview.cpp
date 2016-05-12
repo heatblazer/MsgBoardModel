@@ -10,6 +10,7 @@ namespace msgboard
 MsgBoardView::MsgBoardView(QWidget *parent)
     : QListView(parent)
 {
+
     // this enables emits to a clicked(QMOdelIndex& ind); //
     this->setAttribute(Qt::WA_AcceptTouchEvents, true);
 
@@ -26,13 +27,10 @@ void MsgBoardView::setMsgModel(QAbstractItemModel* model)
     m_model = (MsgBoardModel*) model;
     setModel(m_model);
 
+    // this will enable the model to recieve info for the row clicked
+    m_model->setSelModel(selectionModel());
 
-    std::cout << "CUrrent index clicked: "
-              <<currentIndex().row()
-             << std::endl;
-
-    // this will enable the model to recieve the clicks
-
+    // handling from the model
     connect(this, SIGNAL(clicked(QModelIndex)),
             m_model, SLOT(hMsgHideUserActivity()));
 
@@ -44,6 +42,7 @@ void MsgBoardView::showMsgModel()
     //((QListView*)this)->show();
     show();
 }
+
 
 
 }
