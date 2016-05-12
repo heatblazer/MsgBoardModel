@@ -1,4 +1,3 @@
-#pragma once
 #ifndef USRAPIIMPL_H
 #define USRAPIIMPL_H
 

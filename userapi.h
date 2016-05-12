@@ -1,4 +1,3 @@
-#pragma once
 #ifndef USERAPI_H
 #define USERAPI_H
 

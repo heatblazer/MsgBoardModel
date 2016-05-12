@@ -2,14 +2,14 @@
 
 namespace msgboard {
 
-    UserApiInterface::UserApiInterface()
-    {
+UserApiInterface::UserApiInterface()
+{
 
-    }
+}
 
-    UserApiInterface::~UserApiInterface()
-    {
+UserApiInterface::~UserApiInterface()
+{
 
-    }
+}
 
 }

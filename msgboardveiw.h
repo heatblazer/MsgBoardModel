@@ -1,43 +1,32 @@
-#pragma once
 #ifndef MSGBOARDVEIW_H
 #define MSGBOARDVEIW_H
 
-#include <QAbstractItemView>
-#include <QListView>
-#include <QList>
+#include <QListView>    // inherite
+
+
 #include "msgboardmodel.h"
 
 
 namespace msgboard {
 
-    class Msg;
+class Msg;
 
-    class MsgBoardView : QListView
-    {
+class MsgBoardView : QListView
+{
 
-    public:
-        MsgBoardView(QWidget *parent = 0);
-        virtual ~MsgBoardView();
+public:
+    MsgBoardView(QWidget *parent = 0);
+    virtual ~MsgBoardView();
 
-        /**
-         * @brief setMsgModel: it will call the paren`ts setModel(...); however you can override it
-         * @param QAbstractItemModel
-         */
-        virtual void setMsgModel(QAbstractItemModel* model);
+    virtual void setMsgModel(QAbstractItemModel* model);
+    virtual void showMsgModel(void);
 
-        /**
-         * @brief it will call the parent`s show(...) but it can be overriden if needed
-         */
-        virtual void showMsgModel(void);
+protected:
 
-    protected:
+private:
+    MsgBoardModel* m_model;
 
-    private:
-        MsgBoardModel* m_model;
-
-
-        friend class MsgBoardModel;
-    };
+};
 
 }
 #endif // MSGBOARDVEIW_H
