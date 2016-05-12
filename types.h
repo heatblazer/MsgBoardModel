@@ -26,12 +26,13 @@ namespace msgboard {
     class Msg
     {
     public:
-        Msg(const QString& msg, MsgType type, int timer);
+        Msg(const QString& msg, MsgType type, int timer, bool clicked);
         virtual ~Msg(); // if we need to extend it but we won`t do it
         QString m_msg;
         MsgType m_type;
         int m_timer; // -1 for non timer messages
-        int m_index; //
+        int m_index; // reflects to the rows (or cols if needed )
+        bool m_clicked; // false by default, user has not clicked it
 
     };
 
