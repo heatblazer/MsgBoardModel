@@ -21,6 +21,8 @@ public:
     virtual void setMsgModel(QAbstractItemModel* model);
     virtual void showMsgModel(void);
 
+
+
 protected:
 
 private:
