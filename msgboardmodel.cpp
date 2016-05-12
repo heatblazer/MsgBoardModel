@@ -7,6 +7,9 @@
 #include <QModelIndex>
 #include <QVariant>\
 
+// remove include
+#include <iostream>
+
 // Local headers //
 #include "types.h"
 
@@ -20,6 +23,7 @@ MsgBoardModel::MsgBoardModel(QObject *parent) :
 {
     connect(&m_msgHidingTick, SIGNAL(timeout()), this, SLOT(hMsgHideTick()));
     m_msgHidingTick.start(200); // 200ms check
+
 }
 
 
@@ -32,7 +36,8 @@ MsgBoardModel::~MsgBoardModel()
 // remove all timeouted messages
 void MsgBoardModel::hMsgHideTick()
 {
-    // fixed buf - last element is at -1 from the max size //
+
+    // fixed bug - last element is at -1 from the max size //
     for(int i = m_messages.count()-1; i >= 0; --i) {
         Msg * m = m_messages.at(i);
         if ( (m->m_type == TIMER_ACTIVITY_MSG) && (m->m_timer > 0) ) {
@@ -49,10 +54,38 @@ void MsgBoardModel::hMsgHideTick()
 }
 
 
-/**
- * @brief singleton ( NOT  THREAD SAFE!!! )
- * @return static instance
- */
+// on touch event hide the user message
+// remove all user messages
+void MsgBoardModel::hMsgHideUserActivity()
+{
+
+
+    std::cout << "User clicked on model "
+              << std::endl;
+
+    for(int i=0; i < m_messages.count(); ++i) {
+        Msg* pMsg = m_messages.at(i);
+
+        if (pMsg->m_type == USER_ACTIVITY_MSG) {
+            std::cout << "USER ACTIVITY TYPE ("
+                      << pMsg->m_index
+                      <<")"
+                      << std::endl;
+            beginRemoveRows(QModelIndex(), i, i);
+            m_messages.removeAt(i);
+            endRemoveRows();
+            break;
+        }
+
+
+    }
+
+}
+
+//!
+//! \brief Singleton ( not thread safe )
+//! \return single instance
+//!
 MsgBoardModel*  MsgBoardModel::instance(void)
 {
     if (sInstance == nullptr) {
@@ -63,11 +96,11 @@ MsgBoardModel*  MsgBoardModel::instance(void)
 }
 
 
-/**
- * @brief UNUSED (do not delete for now )
- * @param parent
- * @return
- */
+//!
+//! \brief MsgBoardModel::rowCount
+//! \param parent
+//! \return Msg list size if parent is present
+//!
 int MsgBoardModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
@@ -78,11 +111,11 @@ int MsgBoardModel::rowCount(const QModelIndex &parent) const
 }
 
 
-/**
- * @brief UNUSED ( do not delete for now )
- * @param parent
- * @return
- */
+//!
+//! \brief MsgBoardModel::columnCount
+//! \param parent
+//! \return always 1 ( in our case )
+//!
 int MsgBoardModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
@@ -188,8 +221,8 @@ void MsgBoardModel::addUserMsg(const QString& msg)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1);
-
+    Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1, true);
+    m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
     endInsertRows();
@@ -200,8 +233,8 @@ void MsgBoardModel::addTimerMsg(const QString& msg, int timeout)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout);
-
+    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout, false);
+    m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
     endInsertRows();
@@ -211,8 +244,8 @@ void MsgBoardModel::addStaticMsg(const QString& msg)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1);
-
+    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1, false);
+    m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
     endInsertRows();
