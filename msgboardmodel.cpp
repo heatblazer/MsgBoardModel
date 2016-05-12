@@ -32,9 +32,10 @@ MsgBoardModel::~MsgBoardModel()
 // remove all timeouted messages
 void MsgBoardModel::hMsgHideTick()
 {
-    for(int i = m_messages.count(); i >= 0; --i) {
+    // fixed buf - last element is at -1 from the max size //
+    for(int i = m_messages.count()-1; i >= 0; --i) {
         Msg * m = m_messages.at(i);
-        if ((m->m_type == TIMER_ACTIVITY_MSG) && (m->m_timer > 0)) {
+        if ( (m->m_type == TIMER_ACTIVITY_MSG) && (m->m_timer > 0) ) {
             m->m_timer -= 200;
 
             if (m->m_timer <= 0) {
@@ -44,6 +45,7 @@ void MsgBoardModel::hMsgHideTick()
             }
         }
     }
+
 }
 
 
