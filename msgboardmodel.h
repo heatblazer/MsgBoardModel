@@ -37,6 +37,7 @@ private:
 
 private slots:
     void hMsgHideTick();
+    void hMsgHideUserActivity();
 
 private:
     static MsgBoardModel* sInstance;
