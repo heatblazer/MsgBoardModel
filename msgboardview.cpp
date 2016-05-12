@@ -7,6 +7,8 @@ namespace msgboard
 MsgBoardView::MsgBoardView(QWidget *parent)
     : QListView(parent)
 {
+    // this enables emits to a clicked(QMOdelIndex& ind); //
+    this->setAttribute(Qt::WA_AcceptTouchEvents, true);
 }
 
 MsgBoardView::~MsgBoardView()
