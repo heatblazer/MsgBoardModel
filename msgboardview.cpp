@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "msgboardveiw.h"
 #include "types.h"
 

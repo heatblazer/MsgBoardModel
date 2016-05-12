@@ -8,8 +8,6 @@
 #include <QModelIndex>
 #include <QVariant>\
 
-// remove include
-#include <iostream>
 
 // Local headers //
 #include "types.h"
@@ -72,7 +70,7 @@ void MsgBoardModel::hMsgHideUserActivity()
 
 void MsgBoardModel::hChangedMessage()
 {
-    std::cout << "CHANGED REPORT " << std::endl;
+
 }
 
 
