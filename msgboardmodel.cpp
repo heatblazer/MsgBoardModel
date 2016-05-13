@@ -213,7 +213,7 @@ void MsgBoardModel::addUserMsg(const QString& msg)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1, false);
+    Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1);
     m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
@@ -226,7 +226,7 @@ void MsgBoardModel::addTimerMsg(const QString& msg, int timeout)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout, false);
+    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout);
     m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
@@ -237,7 +237,7 @@ void MsgBoardModel::addStaticMsg(const QString& msg)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1, false);
+    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1);
     m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
