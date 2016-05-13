@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     userapi.cpp \
     userapiimpl.cpp \
     msgboardview.cpp \
-    types.cpp
+    types.cpp \
+    deleteme.cpp
 
 
 HEADERS  += \
@@ -29,7 +30,8 @@ HEADERS  += \
     types.h \
     userapi.h \
     usrapiimpl.h \
-    msgboardveiw.h
+    msgboardveiw.h \
+    deleteme.h
 
 FORMS    +=
 

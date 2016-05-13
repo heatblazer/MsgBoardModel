@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QListView>
 #include <QTableView>
+#include <QTimer>
 
 // Local headers //
 #include "msgboardmodel.h"
@@ -9,8 +10,11 @@
 #include "types.h"
 #include "usrapiimpl.h"
 
+// to be deleted
+#include "deleteme.h"
 
 using namespace  msgboard;
+
 
 /* View the crash course here:
  http://doc.qt.io/qt-4.8/modelview.html
@@ -23,6 +27,10 @@ int main(int argc, char *argv[])
 
     MsgBoardModel* myModel = MsgBoardModel::instance();
     MsgBoardView*  myView = new MsgBoardView();
+
+
+    ModelTest* test1 = new ModelTest();
+    test1->addModel(myModel);
 
     myView->setMsgModel((QAbstractItemModel*)myModel);
     \
@@ -56,8 +64,11 @@ int main(int argc, char *argv[])
     myModel->addStaticMsg("------2-2--2-2-2-");
 
 
+
     myView->showMsgModel();
 
+
+    test1->startTest1();
 
     return a.exec();
 }
