@@ -22,6 +22,7 @@ public:
     void addTimerMsg(const QString& msg, int timeout);
     void addStaticMsg(const QString& msg);
     void removeMsg(const QString& msg);
+    void removeMsgById(const int id);
 
     // view api
     virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;

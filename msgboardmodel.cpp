@@ -259,6 +259,17 @@ void MsgBoardModel::removeMsg(const QString& msg)
 }
 
 
+void MsgBoardModel::removeMsgById(const int id)
+{
+    for(int i=0; i < m_messages.count(); i++) {
+        if (m_messages.at(i)->m_index == id) {
+            beginRemoveRows(QModelIndex(), id, id);
+            m_messages.removeAt(id);
+            endRemoveRows();
+        }
+    }
+}
+
 void MsgBoardModel::setSelModel(const QItemSelectionModel *pModel)
 {
     m_sel = pModel;
