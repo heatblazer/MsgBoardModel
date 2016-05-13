@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
     MsgBoardView*  myView = new MsgBoardView();
 
 
+    // delete the tests //
     ModelTest* test1 = new ModelTest();
     test1->addModel(myModel);
 
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
 
     myView->showMsgModel();
 
-
+    // delete the tests //
     test1->startTest1();
 
     return a.exec();
