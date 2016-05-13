@@ -39,6 +39,21 @@ int main(int argc, char *argv[])
 
     myModel->addStaticMsg("------2-2--2-2-2-");
 
+    myModel->addUserMsg("message 15");
+    myModel->addUserMsg("message 32");
+    myModel->addUserMsg("message 553");
+    myModel->addUserMsg("message 74");
+    myModel->addUserMsg("message 85");
+    myModel->addUserMsg("message 91");
+    myModel->addUserMsg("message 20");
+    myModel->addUserMsg("message 30");
+    myModel->addUserMsg("message 40");
+    myModel->addUserMsg("message 50");
+
+
+    myModel->addStaticMsg("------2-2--2-2-2-");
+    myModel->addStaticMsg("------2-2--2-2-2-");
+    myModel->addStaticMsg("------2-2--2-2-2-");
     myView->showMsgModel();
 
 
