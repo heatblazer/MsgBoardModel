@@ -10,7 +10,7 @@ class ModelTest : QObject
 
 public:
     ModelTest();
-    ~ModelTest();
+    virtual ~ModelTest();
 
     void addModel(MsgBoardModel* m);
     void startTest1(void);

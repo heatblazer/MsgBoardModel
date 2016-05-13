@@ -7,6 +7,8 @@ ModelTest::~ModelTest() {}
 
 void ModelTest::testDeletionByIndex()
 {
+    // deletes a random element at fixed time interval
+
     int ind = qrand() % m_ref->rowCount(QModelIndex());
     m_ref->removeMsgById(ind);
 
