@@ -54,6 +54,8 @@ int main(int argc, char *argv[])
     myModel->addStaticMsg("------2-2--2-2-2-");
     myModel->addStaticMsg("------2-2--2-2-2-");
     myModel->addStaticMsg("------2-2--2-2-2-");
+
+
     myView->showMsgModel();
 
 
