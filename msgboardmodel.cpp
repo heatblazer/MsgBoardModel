@@ -214,11 +214,10 @@ void MsgBoardModel::addUserMsg(const QString& msg)
     const int size = m_messages.count();
 
     Msg* m = new Msg(msg, USER_ACTIVITY_MSG, -1, false);
-    m->m_index = size-1;
+    m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
     endInsertRows();
-
 
 }
 
@@ -228,7 +227,7 @@ void MsgBoardModel::addTimerMsg(const QString& msg, int timeout)
     const int size = m_messages.count();
 
     Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, timeout, false);
-    m->m_index = size-1;
+    m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
     endInsertRows();
@@ -239,7 +238,7 @@ void MsgBoardModel::addStaticMsg(const QString& msg)
     const int size = m_messages.count();
 
     Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1, false);
-    m->m_index = size-1;
+    m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);
     endInsertRows();
@@ -261,8 +260,9 @@ void MsgBoardModel::removeMsg(const QString& msg)
 
 void MsgBoardModel::removeMsgById(const int id)
 {
+
     for(int i=0; i < m_messages.count(); i++) {
-        if (m_messages.at(i)->m_index == id) {
+        if (i == id) {
             beginRemoveRows(QModelIndex(), id, id);
             m_messages.removeAt(id);
             endRemoveRows();
