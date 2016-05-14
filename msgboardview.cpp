@@ -32,6 +32,11 @@ void MsgBoardView::setMsgModel(QAbstractItemModel* model)
     connect(this, SIGNAL(clicked(QModelIndex)),
             m_model, SLOT(hMsgHideUserActivity()));
 
+    QString style = MsgStyleBuilder::instance().setColor("red").setBackgroundColor("blue")
+            .setSelBackgroundColor("yellow").setSelectionColor("green").strike();
+
+    this->setStyleSheet(style);
+
 }
 
 // use the parent`s show
