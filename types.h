@@ -46,6 +46,7 @@ private:
         BCK_COLOR,
         SEL_COLOR,
         SEL_BCK_COLOR,
+        SIZE
     };
 
 public:
@@ -63,7 +64,9 @@ private:
     MsgStyleBuilder();
     virtual ~MsgStyleBuilder();
     static MsgStyleBuilder* s_instance;
-    QString m_style[4];
+
+    //aggregation of string objects
+    QString* m_style[Styles::SIZE];
 
 };
 

@@ -23,6 +23,10 @@ MsgStyleBuilder*    MsgStyleBuilder::s_instance = nullptr;
 MsgStyleBuilder::MsgStyleBuilder()
 {
     // set some defaults
+    // explicity null all pointers
+    for(int i=0; i < Styles::SIZE; i++) {
+        m_style[i] = nullptr;
+    }
 }
 
 
@@ -42,46 +46,53 @@ MsgStyleBuilder&    MsgStyleBuilder::instance()
 
 MsgStyleBuilder&    MsgStyleBuilder::setColor(const QString& col)
 {
-    m_style[MsgStyleBuilder::Styles::COLOR] = col;
+    char s[128]={0};
+    sprintf(s, "color: %s;", col.toLocal8Bit().constData());
+    m_style[Styles::COLOR] = new QString(s);
+
     return *s_instance;
 }
 
 
 MsgStyleBuilder&    MsgStyleBuilder::setBackgroundColor(const QString &col)
 {
-    m_style[MsgStyleBuilder::Styles::BCK_COLOR] = col;
+    char s[128]={0};
+    sprintf(s, "background-color: %s;", col.toLocal8Bit().constData());
+    m_style[MsgStyleBuilder::Styles::BCK_COLOR] = new QString(s);
+
     return *s_instance;
 }
 
 
 MsgStyleBuilder&    MsgStyleBuilder::setSelBackgroundColor(const QString &col)
 {
-    m_style[MsgStyleBuilder::Styles::SEL_BCK_COLOR] = col;
+    char s[128]={0};
+    sprintf(s, "selection-background-color: %s;", col.toLocal8Bit().constData());
+    m_style[Styles::SEL_BCK_COLOR] = new QString(s);
+
     return *s_instance;
 }
 
 MsgStyleBuilder&    MsgStyleBuilder::setSelectionColor(const QString &col)
 {
-    m_style[MsgStyleBuilder::Styles::SEL_COLOR] = col;
+    char s[128] = {0};
+    sprintf(s,"selection-color: %s;", col.toLocal8Bit().constData());
+    m_style[Styles::SEL_COLOR] = new QString(s);
+
     return *s_instance;
 }
 
 
 QString     MsgStyleBuilder::strike()
 {
-    static char style[1024] = {0};
+    QString ret_style;
+    for(int i=0; i < Styles::SIZE; i++) {
+        if (m_style[i]) {
+            ret_style.append(m_style[i]);
+        }
+    }
 
-    sprintf(style, "color: %s;"
-                   "background-color: %s;"
-                   "selection-color: %s;"
-                   "selection-background-color: %s;",
-            m_style[0].toLocal8Bit().constData(),
-            m_style[1].toLocal8Bit().constData(),
-            m_style[2].toLocal8Bit().constData(),
-            m_style[3].toLocal8Bit().constData()
-            );
 
-    QString ret_style(style);
     return ret_style;
 }
 
