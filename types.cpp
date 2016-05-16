@@ -25,14 +25,20 @@ MsgStyleBuilder::MsgStyleBuilder()
     // set some defaults
     // explicity null all pointers
     for(int i=0; i < Styles::SIZE; i++) {
-        m_style[i] = nullptr;
+         m_style[i] = nullptr;
     }
 }
 
 
 MsgStyleBuilder::~MsgStyleBuilder()
 {
-
+    // this should not happen since strike() frees the lsit... anyway . . .
+    for(int i=0; i < Styles::SIZE; i++) {
+        if (m_style[i]) {
+            delete m_style[i];
+            m_style[i] = nullptr;
+        }
+    }
 }
 
 
@@ -48,7 +54,9 @@ MsgStyleBuilder&    MsgStyleBuilder::setColor(const QString& col)
 {
     char s[128]={0};
     sprintf(s, "color: %s;", col.toLocal8Bit().constData());
-    m_style[Styles::COLOR] = new QString(s);
+    if(!m_style[Styles::COLOR]) {
+        m_style[Styles::COLOR] = new QString(s);
+    }
 
     return *s_instance;
 }
@@ -58,7 +66,9 @@ MsgStyleBuilder&    MsgStyleBuilder::setBackgroundColor(const QString &col)
 {
     char s[128]={0};
     sprintf(s, "background-color: %s;", col.toLocal8Bit().constData());
-    m_style[MsgStyleBuilder::Styles::BCK_COLOR] = new QString(s);
+    if(!m_style[Styles::BCK_COLOR]) {
+        m_style[MsgStyleBuilder::Styles::BCK_COLOR] = new QString(s);
+    }
 
     return *s_instance;
 }
@@ -68,7 +78,9 @@ MsgStyleBuilder&    MsgStyleBuilder::setSelBackgroundColor(const QString &col)
 {
     char s[128]={0};
     sprintf(s, "selection-background-color: %s;", col.toLocal8Bit().constData());
-    m_style[Styles::SEL_BCK_COLOR] = new QString(s);
+    if (!m_style[Styles::SEL_BCK_COLOR]) {
+        m_style[Styles::SEL_BCK_COLOR] = new QString(s);
+    }
 
     return *s_instance;
 }
@@ -77,7 +89,9 @@ MsgStyleBuilder&    MsgStyleBuilder::setSelectionColor(const QString &col)
 {
     char s[128] = {0};
     sprintf(s,"selection-color: %s;", col.toLocal8Bit().constData());
-    m_style[Styles::SEL_COLOR] = new QString(s);
+    if (!m_style[Styles::SEL_COLOR]) {
+        m_style[Styles::SEL_COLOR] = new QString(s);
+    }
 
     return *s_instance;
 }
@@ -89,6 +103,8 @@ QString     MsgStyleBuilder::strike()
     for(int i=0; i < Styles::SIZE; i++) {
         if (m_style[i]) {
             ret_style.append(m_style[i]);
+            delete m_style[i];
+            m_style[i] = nullptr;
         }
     }
 
