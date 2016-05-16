@@ -32,7 +32,7 @@ void MsgBoardView::setMsgModel(QAbstractItemModel* model)
     connect(this, SIGNAL(clicked(QModelIndex)),
             m_model, SLOT(hMsgHideUserActivity()));
 
-    QString style = MsgStyleBuilder::instance().setColor("red").setBackgroundColor("blue")
+    QString style = MsgStyleBuilder::instance().setColor("red").setBackgroundColor("white")
             .setSelBackgroundColor("yellow").setSelectionColor("green").strike();
 
     this->setStyleSheet(style);
