@@ -237,7 +237,7 @@ void MsgBoardModel::addStaticMsg(const QString& msg)
 {
     const int size = m_messages.count();
 
-    Msg* m = new Msg(msg, TIMER_ACTIVITY_MSG, -1);
+    Msg* m = new Msg(msg, STATIC_ACTIVITY_MSG, -1);
     m->m_index = size;
     beginInsertRows(QModelIndex(), size, size);
     m_messages.append(m);

@@ -24,7 +24,7 @@ void ModelTest::addModel(MsgBoardModel* m)
 {
     m_ref = m;
     m_timer = new QTimer(this);
-    m_timer->setInterval(5000);
+    m_timer->setInterval(3000);
     m_timer->start();
 }
 
