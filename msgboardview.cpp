@@ -24,18 +24,20 @@ void MsgBoardView::setMsgModel(QAbstractItemModel* model)
     //((QListView*)this)->setModel(model);
     m_model = (MsgBoardModel*) model;
     setModel(m_model);
-
     // this will enable the model to recieve info for the row clicked
     m_model->setSelModel(selectionModel());
-
     // handling from the model
     connect(this, SIGNAL(clicked(QModelIndex)),
             m_model, SLOT(hMsgHideUserActivity()));
 
-    QString style = MsgStyleBuilder::instance().setColor("red").setBackgroundColor("yellow")
-            .setSelBackgroundColor("blue").setSelectionColor("black").strike();
+    QString style = MsgStyleBuilder::instance().setColor("red")
+            .setBackgroundColor("white")
+            .setSelBackgroundColor("blue")
+            .setSelectionColor("black")
+            .setPosition(110,0,30,30).strike();
 
     this->setStyleSheet(style);
+
 
 }
 

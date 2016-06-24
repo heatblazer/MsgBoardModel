@@ -46,7 +46,8 @@ private:
         BCK_COLOR,
         SEL_COLOR,
         SEL_BCK_COLOR,
-        SIZE
+        SIZE,
+        MAX
     };
 
 public:
@@ -57,6 +58,7 @@ public:
     MsgStyleBuilder& setBackgroundColor(const QString& col);
     MsgStyleBuilder& setSelectionColor(const QString& col);
     MsgStyleBuilder& setSelBackgroundColor(const QString& col);
+    MsgStyleBuilder& setPosition(int x, int y, int w, int h);
 
     QString         strike(void);
 
@@ -66,7 +68,7 @@ private:
     static MsgStyleBuilder* s_instance;
 
     //aggregation of string objects
-    QString* m_style[Styles::SIZE];
+    QString* m_style[Styles::MAX];
 
 };
 

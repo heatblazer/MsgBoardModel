@@ -24,7 +24,7 @@ MsgStyleBuilder::MsgStyleBuilder()
 {
     // set some defaults
     // explicity null all pointers
-    for(int i=0; i < Styles::SIZE; i++) {
+    for(int i=0; i < Styles::MAX; i++) {
          m_style[i] = nullptr;
     }
 }
@@ -33,7 +33,7 @@ MsgStyleBuilder::MsgStyleBuilder()
 MsgStyleBuilder::~MsgStyleBuilder()
 {
     // this should not happen since strike() frees the lsit... anyway . . .
-    for(int i=0; i < Styles::SIZE; i++) {
+    for(int i=0; i < Styles::MAX; i++) {
         if (m_style[i]) {
             delete m_style[i];
             m_style[i] = nullptr;
@@ -85,6 +85,18 @@ MsgStyleBuilder&    MsgStyleBuilder::setSelBackgroundColor(const QString &col)
     return *s_instance;
 }
 
+MsgStyleBuilder &MsgStyleBuilder::setPosition(int x, int y, int w, int h)
+{
+    char s[256]={0};
+    sprintf(s, "padding-left:%dpx;padding-right:%dpx;"
+            "height:%dpx;width%dpx;", x, y, w, h);
+    if(!m_style[Styles::SIZE]) {
+        m_style[Styles::SIZE] = new QString(s);
+    }
+
+    return *s_instance;
+}
+
 MsgStyleBuilder&    MsgStyleBuilder::setSelectionColor(const QString &col)
 {
     char s[128] = {0};
@@ -100,14 +112,13 @@ MsgStyleBuilder&    MsgStyleBuilder::setSelectionColor(const QString &col)
 QString     MsgStyleBuilder::strike()
 {
     QString ret_style;
-    for(int i=0; i < Styles::SIZE; i++) {
-        if (m_style[i]) {
+    for(int i=0; i < Styles::MAX; i++) {
+        if (m_style[i] != nullptr) {
             ret_style.append(m_style[i]);
             delete m_style[i];
             m_style[i] = nullptr;
         }
     }
-
 
     return ret_style;
 }
